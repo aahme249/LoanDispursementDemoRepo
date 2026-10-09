@@ -1,0 +1,42 @@
+{
+  "name": "loan-disbursement-demo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Auditable loan disbursement service: Hono + tRPC + Kysely + Postgres + Temporal",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "db:up": "docker compose up -d postgres",
+    "migrate": "tsx src/db/migrate-cli.ts",
+    "worker": "tsx src/temporal/worker.ts",
+    "api": "tsx src/api/server.ts",
+    "test": "vitest run",
+    "test:unit": "vitest run test/unit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "@hono/trpc-server": "^0.4.2",
+    "@temporalio/activity": "^1.24.0",
+    "@temporalio/client": "^1.24.0",
+    "@temporalio/worker": "^1.24.0",
+    "@temporalio/workflow": "^1.24.0",
+    "@trpc/server": "^11.19.0",
+    "hono": "^4.13.10",
+    "kysely": "^0.29.6",
+    "pg": "^8.23.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@temporalio/testing": "^1.24.0",
+    "@testcontainers/postgresql": "^12.2.0",
+    "@types/node": "^26.6.3",
+    "@types/pg": "^8.23.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.2"
+  }
+}

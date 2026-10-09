@@ -1,0 +1,21 @@
+stages: [verify]
+
+verify:
+  stage: verify
+  image: node:22
+  services:
+    - name: postgres:16-alpine
+      alias: postgres
+  variables:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    # Tests create and drop their own database per file on this server.
+    TEST_DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
+  cache:
+    key:
+      files: [package-lock.json]
+    paths: [.npm/]
+  script:
+    - npm ci --cache .npm --prefer-offline
+    - npm run typecheck
+    - npm test
